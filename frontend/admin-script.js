@@ -133,7 +133,7 @@ async function handleAdminLogin(event) {
 
     try {
         // Authenticate via API
-        const response = await fetch('/api/admin-login', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/admin-login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -6837,7 +6837,7 @@ async function handleAddBannerImage(event) {
             const uploadFormData = new FormData();
             uploadFormData.append('bannerImage', imageFile);
 
-            const uploadResponse = await fetch('/api/upload-banner', {
+            const uploadResponse = await fetch('https://mediquick-p37c.onrender.com/api/upload-banner', {
                 method: 'POST',
                 headers: {
                     'X-Admin-Password': adminSession.getPassword()
@@ -6957,7 +6957,7 @@ async function handleEditBannerImage(event) {
             const uploadFormData = new FormData();
             uploadFormData.append('bannerImage', imageFile);
 
-            const uploadResponse = await fetch('/api/upload-banner', {
+            const uploadResponse = await fetch('https://mediquick-p37c.onrender.com/api/upload-banner', {
                 method: 'POST',
                 headers: {
                     'X-Admin-Password': adminSession.getPassword()
@@ -7460,7 +7460,7 @@ async function loadBkashSection() {
     
     try {
         // Fetch bKash config from backend
-        const response = await fetch('/api/admin/bkash-config', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/admin/bkash-config', {
             headers: {
                 'x-admin-password': adminSession.getPassword()
             }
@@ -7540,7 +7540,7 @@ async function saveBkashCredentials(event) {
             is_active: document.getElementById('bkash-is-active').value === 'true'
         };
         
-        const response = await fetch('/api/admin/bkash-config', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/admin/bkash-config', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -7594,7 +7594,7 @@ async function testBkashConnection() {
     
     try {
         // Create a test payment with small amount
-        const response = await fetch('/api/bkash/create-payment', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/bkash/create-payment', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -7639,7 +7639,7 @@ async function loadBkashSendMoneySection() {
     
     try {
         // Fetch bKash Send Money settings from backend
-        const response = await fetch('/api/admin/bkash-send-money-settings', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/admin/bkash-send-money-settings', {
             headers: {
                 'x-admin-password': adminSession.getPassword()
             }
@@ -7745,7 +7745,7 @@ async function saveBkashSendMoneySettings(event) {
             is_active: document.getElementById('send-money-is-active').value === 'true'
         };
         
-        const response = await fetch('/api/admin/bkash-send-money-settings', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/admin/bkash-send-money-settings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

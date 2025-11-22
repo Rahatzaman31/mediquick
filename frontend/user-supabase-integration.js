@@ -1166,7 +1166,7 @@ async function handleUserSignUp(email, password) {
             throw new Error('Only Gmail and Hotmail email addresses are allowed');
         }
         
-        const response = await fetch('/api/signup', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1189,7 +1189,7 @@ async function handleUserSignUp(email, password) {
 
 async function handleUserSignIn(email, password) {
     try {
-        const response = await fetch('/api/signin', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

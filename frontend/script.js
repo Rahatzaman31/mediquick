@@ -699,7 +699,7 @@ window.handleForgotPassword = async function(event) {
     submitButton.textContent = 'Sending...';
     
     try {
-        const response = await fetch('/api/forgot-password', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -828,7 +828,7 @@ window.handlePasswordResetOTPVerification = async function(event) {
     submitButton.textContent = 'Verifying...';
     
     try {
-        const response = await fetch('/api/verify-reset-otp', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/verify-reset-otp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -889,7 +889,7 @@ window.handleOTPVerification = async function(event) {
     submitButton.textContent = 'Verifying...';
     
     try {
-        const response = await fetch('/api/verify-email', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/verify-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -950,7 +950,7 @@ window.handleResetPasswordWithOTP = async function(event) {
     submitButton.textContent = 'Resetting...';
     
     try {
-        const response = await fetch('/api/reset-password', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/reset-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -995,7 +995,7 @@ window.resendOTP = async function() {
     }
     
     try {
-        const response = await fetch('/api/forgot-password', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1122,7 +1122,7 @@ window.handleSignUp = async function(event) {
     submitButton.textContent = 'Creating Account...';
 
     try {
-        const response = await fetch('/api/signup', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1198,7 +1198,7 @@ window.handleOTPVerification = async function(event) {
     submitButton.textContent = 'Verifying...';
     
     try {
-        const response = await fetch('/api/verify-otp', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/verify-otp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1270,7 +1270,7 @@ window.handleResendOTP = async function() {
     resendBtn.textContent = 'Sending...';
     
     try {
-        const response = await fetch('/api/resend-otp', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/resend-otp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1358,7 +1358,7 @@ window.handleSignIn = async function(event) {
     
     // Try to sign in via API
     try {
-        const response = await fetch('/api/signin', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1481,7 +1481,7 @@ window.handleSignIn = async function(event) {
 
 async function resendVerificationEmail(email) {
     try {
-        const response = await fetch('/api/resend-verification', {
+        const response = await fetch('https://mediquick-p37c.onrender.com/api/resend-verification', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -10538,7 +10538,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to load bKash Send Money settings from database
     async function loadBkashSendMoneySettings() {
         try {
-            const response = await fetch('/api/bkash-send-money-settings');
+            const response = await fetch('https://mediquick-p37c.onrender.com/api/bkash-send-money-settings');
             const data = await response.json();
 
             if (data.success && data.settings) {
@@ -10607,7 +10607,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const paymentAmount = 100;
 
             // Call backend to create payment
-            const response = await fetch('/api/bkash/create-payment', {
+            const response = await fetch('https://mediquick-p37c.onrender.com/api/bkash/create-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -10731,7 +10731,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             console.log('Fallback: Executing and checking payment status for', paymentID);
             
-            const executeResponse = await fetch('/api/bkash/execute-payment', {
+            const executeResponse = await fetch('https://mediquick-p37c.onrender.com/api/bkash/execute-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -12861,7 +12861,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 try {
                     // Call the backend API to change password
-                    const response = await fetch('/api/change-password', {
+                    const response = await fetch('https://mediquick-p37c.onrender.com/api/change-password', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
