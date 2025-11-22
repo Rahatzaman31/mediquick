@@ -51,6 +51,8 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
+const frontendURL = process.env.FRONTEND_URL || 'https://mediquick-two.vercel.app';
+
 function getBaseUrl() {
   if (process.env.BASE_URL) {
     return process.env.BASE_URL;
@@ -1496,11 +1498,22 @@ app.get('/api/bkash/query-payment/:paymentID', async (req, res) => {
 
 // bKash callback handler
 app.get('/api/bkash/callback', async (req, res) => {
-  const { paymentID, status } = req.query;
-  
-  // Redirect to frontend with payment result
-  const redirectURL = `${frontendURL}/bkash-payment-result.html?paymentID=${paymentID}&status=${status}`;
-  res.redirect(redirectURL);
+  try {
+    const { paymentID, status } = req.query;
+    
+    console.log('bKash callback received:', { paymentID, status });
+    
+    // Redirect to frontend with payment result
+    const redirectURL = `${frontendURL}/bkash-payment-result.html?paymentID=${paymentID}&status=${status}`;
+    console.log('Redirecting to:', redirectURL);
+    
+    res.redirect(redirectURL);
+  } catch (error) {
+    console.error('bKash callback error:', error);
+    // Even if there's an error, try to redirect to frontend with error status
+    const redirectURL = `${frontendURL}/bkash-payment-result.html?status=error`;
+    res.redirect(redirectURL);
+  }
 });
 
 // Admin: Get bKash credentials
