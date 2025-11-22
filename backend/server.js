@@ -1499,7 +1499,7 @@ app.get('/api/bkash/callback', async (req, res) => {
   const { paymentID, status } = req.query;
   
   // Redirect to frontend with payment result
-  const redirectURL = `/bkash-payment-result.html?paymentID=${paymentID}&status=${status}`;
+  const redirectURL = `${frontendURL}/bkash-payment-result.html?paymentID=${paymentID}&status=${status}`;
   res.redirect(redirectURL);
 });
 
