@@ -3066,6 +3066,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (doctorCategoryEl) {
             const categoryText = (currentDoctor && currentDoctor.specialty) || specialty;
             doctorCategoryEl.textContent = getCategoryWithBangla(categoryText);
+            // Store raw specialty in data attribute for booking purposes
+            doctorCategoryEl.setAttribute('data-specialty', categoryText);
         }
 
         // Update doctor status based on doctor data
@@ -6958,7 +6960,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Get current doctor details from doctor details screen
             const doctorName = document.getElementById('doctor-name').textContent;
-            const doctorCategory = document.getElementById('doctor-category').textContent;
+            const doctorCategory = document.getElementById('doctor-category').getAttribute('data-specialty') || document.getElementById('doctor-category').textContent;
             const doctorImage = document.getElementById('doctor-hero-img').src;
 
             // Update patient details screen with current doctor info
@@ -6985,7 +6987,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (doctorSummaryCategory) {
-            doctorSummaryCategory.textContent = category;
+            doctorSummaryCategory.textContent = getCategoryWithBangla(category);
+            doctorSummaryCategory.setAttribute('data-specialty', category);
         }
     }
 
@@ -7167,7 +7170,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Store the current doctor's name for date generation
             currentBookingSession.doctor = {
                 name: patientDoctorName.textContent,
-                specialty: patientDoctorCategory ? patientDoctorCategory.textContent : '',
+                specialty: patientDoctorCategory ? (patientDoctorCategory.getAttribute('data-specialty') || patientDoctorCategory.textContent) : '',
                 image: patientDoctorImg ? patientDoctorImg.src : ''
             };
             
