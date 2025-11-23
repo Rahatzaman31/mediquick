@@ -246,7 +246,18 @@
             }
 
             setTimeout(() => {
-                window.close();
+                const closed = window.close();
+                
+                if (!closed || closed === undefined) {
+                    console.log('Window.close() not supported, redirecting to main app...');
+                    const baseUrl = window.location.origin;
+                    const paymentStatus = result.success ? 'success' : 'failed';
+                    const redirectUrl = `${baseUrl}/index.html?payment=${paymentStatus}`;
+                    
+                    sessionStorage.setItem('bkashPaymentResult', JSON.stringify(result));
+                    
+                    window.location.href = redirectUrl;
+                }
             }, result.success ? 2000 : 3000);
         }
 

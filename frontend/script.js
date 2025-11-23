@@ -1767,6 +1767,64 @@ document.addEventListener('DOMContentLoaded', function() {
         window.history.replaceState({}, document.title, '/');
     }
     
+    // Check if user was redirected back from bKash payment
+    const paymentStatus = urlParams.get('payment');
+    if (paymentStatus) {
+        console.log('🔔 Redirected from bKash payment with status:', paymentStatus);
+        
+        // Get payment result from sessionStorage
+        const paymentResultStr = sessionStorage.getItem('bkashPaymentResult');
+        
+        if (paymentResultStr) {
+            try {
+                const paymentResult = JSON.parse(paymentResultStr);
+                sessionStorage.removeItem('bkashPaymentResult');
+                
+                // Handle the payment result
+                if (paymentResult.success && paymentResult.transactionData) {
+                    const paymentInfo = JSON.parse(sessionStorage.getItem('bkashPaymentInfo') || '{}');
+                    
+                    // Delay to ensure the app is fully initialized
+                    setTimeout(async () => {
+                        if (typeof handleSuccessfulBkashPayment === 'function') {
+                            await handleSuccessfulBkashPayment(paymentInfo, paymentResult.transactionData);
+                        } else {
+                            CustomDialog.alert('Payment successful! Transaction ID: ' + paymentResult.transactionData.trxID, 'Payment Complete');
+                        }
+                        sessionStorage.removeItem('bkashPaymentInfo');
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        if (paymentResult.status === 'cancelled') {
+                            CustomDialog.alert('Payment was cancelled.', 'Payment Cancelled');
+                        } else {
+                            CustomDialog.alert('Payment failed: ' + (paymentResult.error || 'Unknown error'), 'Payment Failed');
+                        }
+                        sessionStorage.removeItem('bkashPaymentInfo');
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error('Error processing payment result:', error);
+                sessionStorage.removeItem('bkashPaymentInfo');
+            }
+        } else {
+            // Fallback: sessionStorage data is missing, use query parameter
+            setTimeout(() => {
+                if (paymentStatus === 'success') {
+                    CustomDialog.alert('Payment completed successfully!', 'Payment Complete');
+                } else {
+                    CustomDialog.alert('Payment was cancelled or failed.', 'Payment Cancelled');
+                }
+                sessionStorage.removeItem('bkashPaymentInfo');
+            }, 1000);
+        }
+        
+        // Remove the payment query parameter from URL
+        urlParams.delete('payment');
+        const newUrl = urlParams.toString() ? `?${urlParams.toString()}` : '/';
+        window.history.replaceState({}, document.title, newUrl);
+    }
+    
     // Check if user just verified their email and should be redirected to profile creation
     const autoRedirectToProfile = sessionStorage.getItem('autoRedirectToProfile');
     if (autoRedirectToProfile === 'true') {
