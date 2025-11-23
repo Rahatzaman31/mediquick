@@ -10680,14 +10680,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (data.success && data.bkashURL) {
+<<<<<<< HEAD
                 // Store payment info for callback handling, including patient information
                 const paymentInfoToStore = {
+=======
+                // Store payment info for callback handling
+                sessionStorage.setItem('bkashPaymentInfo', JSON.stringify({
+>>>>>>> 8a2752c029c909ae22c6204f068c477eec665b6f
                     paymentID: data.paymentID,
                     invoiceNumber: invoiceNumber,
                     amount: paymentAmount,
                     doctorName: doctorName,
                     appointmentDate: appointmentDate,
                     appointmentTime: appointmentTime
+<<<<<<< HEAD
                 };
                 
                 // Include patient information from currentBookingSession
@@ -10704,6 +10710,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 sessionStorage.setItem('bkashPaymentInfo', JSON.stringify(paymentInfoToStore));
+=======
+                }));
+>>>>>>> 8a2752c029c909ae22c6204f068c477eec665b6f
 
                 // Open bKash payment URL in a popup window
                 const width = 600;
@@ -10864,6 +10873,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const bookingId = 'MQ' + Date.now().toString().slice(-8);
             
+<<<<<<< HEAD
             // Get patient information from paymentInfo first (stored in sessionStorage), then fall back to currentBookingSession
             let patientName = paymentInfo.patientName || 'Patient';
             let patientAddress = 'Rangpur, Bangladesh';
@@ -10878,12 +10888,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Fallback to currentBookingSession
                 patientName = currentBookingSession.patient.name || patientName;
                 console.log('Patient name from currentBookingSession:', patientName);
+=======
+            // Get patient information from booking session
+            let patientName = 'Patient';
+            let patientAddress = 'Rangpur, Bangladesh';
+            
+            if (currentBookingSession.patient) {
+                patientName = currentBookingSession.patient.name || patientName;
+>>>>>>> 8a2752c029c909ae22c6204f068c477eec665b6f
                 if (currentBookingSession.patient.district && currentBookingSession.patient.upazila) {
                     patientAddress = `${currentBookingSession.patient.upazila}, ${currentBookingSession.patient.district}`;
                 }
             }
+<<<<<<< HEAD
             
             console.log('Final patient name for appointment:', patientName);
+=======
+>>>>>>> 8a2752c029c909ae22c6204f068c477eec665b6f
 
             const appointmentDetails = {
                 bookingId: bookingId,
@@ -11039,6 +11060,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+<<<<<<< HEAD
             // Get patient data from current booking session or sessionStorage
             let patientName = 'Patient';
             let patientAddress = 'Rangpur, Bangladesh';
@@ -11076,11 +11098,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.warn('bKash Send Money - No patient data found in sessionStorage or currentBookingSession!');
             }
             
+=======
+            // Get patient data from current booking session
+            let patientName = 'John Doe';
+            let patientAddress = 'Rangpur, Bangladesh';
+            
+>>>>>>> 8a2752c029c909ae22c6204f068c477eec665b6f
             // Set default doctor category if not already set
             if (!doctorCategory) {
                 doctorCategory = 'Dentist';
             }
 
+<<<<<<< HEAD
+=======
+            if (currentBookingSession.patient) {
+                patientName = currentBookingSession.patient.name || patientName;
+                if (currentBookingSession.patient.district && currentBookingSession.patient.upazila) {
+                    patientAddress = `${currentBookingSession.patient.upazila}, ${currentBookingSession.patient.district}`;
+                }
+            }
+
+>>>>>>> 8a2752c029c909ae22c6204f068c477eec665b6f
             if (currentBookingSession.doctor) {
                 doctorCategory = currentBookingSession.doctor.specialty || doctorCategory;
             }
