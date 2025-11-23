@@ -1478,7 +1478,7 @@ async function syncUserAppointments() {
                     bookingId: apt.booking_id,
                     date: apt.created_at,
                     doctorName: apt.doctor_name,
-                    doctorCategory: apt.doctor_specialty || 'General',
+                    doctorCategory: apt.doctor_specialty || apt.doctorCategory || '',
                     appointmentDate: apt.date,
                     appointmentTime: apt.time,
                     patientName: apt.patient_name,
@@ -1492,7 +1492,7 @@ async function syncUserAppointments() {
                     paymentStatus: apt.status === 'approved' ? 'confirmed' : apt.status
                 };
                 
-                console.log(`  📌 Appointment ${apt.booking_id}: status=${apt.status} → display_status=${mappedApt.status}, points=${points}`);
+                console.log(`  📌 Appointment ${apt.booking_id}: status=${apt.status} → display_status=${mappedApt.status}, points=${points}, category=${mappedApt.doctorCategory}`);
                 return mappedApt;
             });
             

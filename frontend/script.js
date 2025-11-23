@@ -10896,12 +10896,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             console.log('Final patient name for appointment:', patientName);
-            console.log('📋 Creating appointment with category:', currentBookingSession.doctor?.specialty || 'General');
+            console.log('📋 Creating appointment with category:', currentBookingSession.doctor?.specialty || '');
 
             const appointmentDetails = {
                 bookingId: bookingId,
                 doctorName: paymentInfo.doctorName,
-                doctorCategory: currentBookingSession.doctor?.specialty || 'General',
+                doctorCategory: currentBookingSession.doctor?.specialty || '',
                 appointmentDate: paymentInfo.appointmentDate,
                 appointmentTime: paymentInfo.appointmentTime,
                 patientName: patientName,
@@ -11009,7 +11009,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get doctor information from booking session
             if (currentBookingSession.doctor && currentBookingSession.doctor.name) {
                 doctorName = currentBookingSession.doctor.name;
-                doctorCategory = currentBookingSession.doctor.specialty || 'Dentist';
+                doctorCategory = currentBookingSession.doctor.specialty || '';
             }
 
             // Get appointment date and time from booking session first
@@ -11091,13 +11091,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Set default doctor category if not already set
             if (!doctorCategory) {
-            console.log('📋 Creating appointment with category:', doctorCategory);
-                doctorCategory = 'Dentist';
+                doctorCategory = currentBookingSession.doctor?.specialty || '';
             }
 
-            if (currentBookingSession.doctor) {
-                doctorCategory = currentBookingSession.doctor.specialty || doctorCategory;
-            }
+            console.log('📋 Creating appointment with category:', doctorCategory);
 
             console.log('bKash payment confirmed:', {
                 bookingId,
@@ -11459,7 +11456,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 bookingId: 'MQ' + Date.now().toString().slice(-8),
                 date: new Date().toISOString(),
                 doctorName: appointmentDetails.doctorName || 'Dr. Musa Siddik Juwel',
-                doctorCategory: appointmentDetails.doctorCategory || 'Dentist',
+                doctorCategory: appointmentDetails.doctorCategory || '',
                 appointmentDate: appointmentDetails.appointmentDate || new Date().toISOString().split('T')[0],
                 appointmentTime: appointmentDetails.appointmentTime || '10:00 AM',
                 patientName: appointmentDetails.patientName || 'John Doe',
@@ -11525,7 +11522,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 bookingId: appointmentDetails.bookingId || 'MQ' + Date.now().toString().slice(-8),
                 date: new Date().toISOString(),
                 doctorName: appointmentDetails.doctorName || 'Dr. Musa Siddik Juwel',
-                doctorCategory: appointmentDetails.doctorCategory || 'Dentist',
+                doctorCategory: appointmentDetails.doctorCategory || '',
                 appointmentDate: appointmentDetails.appointmentDate || new Date().toISOString().split('T')[0],
                 appointmentTime: appointmentDetails.appointmentTime || '10:00 AM',
                 patientName: appointmentDetails.patientName || 'John Doe',
