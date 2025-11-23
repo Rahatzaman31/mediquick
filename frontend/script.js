@@ -121,6 +121,14 @@ function getCategoryWithBangla(category) {
     return category;
 }
 
+
+// Function to extract raw English specialty (remove Bangla translation)
+function extractRawSpecialty(categoryText) {
+    if (!categoryText) return '';
+    // If category contains Bangla (text in parentheses), extract only English part
+    const match = categoryText.match(/^([^(]+)(?:\s*\([^)]+\))?$/);
+    return match ? match[1].trim() : categoryText.trim();
+}
 // Password utilities for consistent hashing across the app
 const PasswordUtils = {
     // Simple hash function for password storage (in production, use proper server-side hashing)
@@ -6959,8 +6967,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Book appointment clicked');
 
             // Get current doctor details from doctor details screen
-            const doctorName = document.getElementById('doctor-name').textContent;
-            const doctorCategory = document.getElementById('doctor-category').getAttribute('data-specialty') || document.getElementById('doctor-category').textContent;
+            const doctorCategory = document.getElementById('doctor-category').getAttribute('data-specialty') || extractRawSpecialty(document.getElementById('doctor-category').textContent);
             const doctorImage = document.getElementById('doctor-hero-img').src;
 
             // Update patient details screen with current doctor info
@@ -7170,9 +7177,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Store the current doctor's name for date generation
             currentBookingSession.doctor = {
                 name: patientDoctorName.textContent,
-                specialty: patientDoctorCategory ? (patientDoctorCategory.getAttribute('data-specialty') || patientDoctorCategory.textContent) : '',
+                specialty: patientDoctorCategory ? (patientDoctorCategory.getAttribute('data-specialty') || extractRawSpecialty(patientDoctorCategory.textContent)) : '',
                 image: patientDoctorImg ? patientDoctorImg.src : ''
             };
+            console.log('📋 Booking Session - Doctor Specialty:', currentBookingSession.doctor.specialty);
             
             // Regenerate date cards with the updated doctor information
             generateDateCards();
@@ -10887,6 +10895,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             console.log('Final patient name for appointment:', patientName);
+            console.log('📋 Creating appointment with category:', currentBookingSession.doctor?.specialty || 'General');
 
             const appointmentDetails = {
                 bookingId: bookingId,
@@ -11081,6 +11090,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Set default doctor category if not already set
             if (!doctorCategory) {
+            console.log('📋 Creating appointment with category:', doctorCategory);
                 doctorCategory = 'Dentist';
             }
 
