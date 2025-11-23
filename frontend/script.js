@@ -6967,6 +6967,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Book appointment clicked');
 
             // Get current doctor details from doctor details screen
+            const doctorName = document.getElementById('doctor-name').textContent;
             const doctorCategory = document.getElementById('doctor-category').getAttribute('data-specialty') || extractRawSpecialty(document.getElementById('doctor-category').textContent);
             const doctorImage = document.getElementById('doctor-hero-img').src;
 
