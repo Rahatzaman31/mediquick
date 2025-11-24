@@ -1338,15 +1338,14 @@ async function grantBkashToken() {
   console.log('Using credentials - Username:', config.username, 'App Key:', config.app_key?.substring(0, 10) + '...');
   
   try {
-    const authString = Buffer.from(`${config.username}:${config.password}`).toString('base64');
-    
     const response = await fetch(`${config.baseURL}/tokenized/checkout/token/grant`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${authString}`,
+        'Accept': 'application/json',
         'username': config.username,
-        'password': config.password
+        'password': config.password,
+        'x-app-key': config.app_key
       },
       body: JSON.stringify({
         app_key: config.app_key,
