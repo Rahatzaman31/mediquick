@@ -1344,8 +1344,7 @@ async function grantBkashToken() {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'username': config.username,
-        'password': config.password,
-        'x-app-key': config.app_key
+        'password': config.password
       },
       body: JSON.stringify({
         app_key: config.app_key,
