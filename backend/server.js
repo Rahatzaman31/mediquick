@@ -1289,13 +1289,18 @@ app.post('/api/change-password', async (req, res) => {
 // bKash configuration - using environment variables or defaults for sandbox
 const getBkashConfig = async () => {
   try {
-    const { data: config } = await supabase
+    const { data: config, error } = await supabase
       .from('payment_settings')
       .select('*')
       .eq('provider', 'bkash')
       .single();
 
+    if (error) {
+      console.log('Error fetching bKash config from database:', error.message);
+    }
+
     if (config && config.is_active) {
+      console.log('Using bKash config from database - Sandbox:', config.is_sandbox, 'Active:', config.is_active);
       return {
         baseURL: config.is_sandbox 
           ? 'https://tokenized.sandbox.bka.sh/v1.2.0-beta'
@@ -1306,12 +1311,15 @@ const getBkashConfig = async () => {
         app_secret: config.app_secret,
         is_sandbox: config.is_sandbox
       };
+    } else if (config) {
+      console.log('bKash config found in database but is_active is false');
     }
   } catch (error) {
-    console.log('No bKash config in database, using sandbox defaults');
+    console.log('Exception fetching bKash config from database:', error.message);
   }
 
   // Default sandbox credentials
+  console.log('Using default bKash sandbox credentials');
   return {
     baseURL: 'https://tokenized.sandbox.bka.sh/v1.2.0-beta',
     username: 'sandboxTokenizedUser02',
@@ -1325,6 +1333,9 @@ const getBkashConfig = async () => {
 // Grant bKash token
 async function grantBkashToken() {
   const config = await getBkashConfig();
+  
+  console.log('Requesting bKash token from:', config.baseURL);
+  console.log('Using credentials - Username:', config.username, 'App Key:', config.app_key?.substring(0, 10) + '...');
   
   try {
     const response = await fetch(`${config.baseURL}/tokenized/checkout/token/grant`, {
@@ -1342,13 +1353,25 @@ async function grantBkashToken() {
 
     const data = await response.json();
     
+    console.log('bKash token response status:', response.status);
+    console.log('bKash token response data:', JSON.stringify(data));
+    
     if (!response.ok) {
-      throw new Error(data.statusMessage || 'Failed to get bKash token');
+      const errorMsg = data.statusMessage || data.errorMessage || 'Failed to get bKash token';
+      console.error('bKash API error response:', data);
+      throw new Error(errorMsg);
     }
 
+    if (!data.id_token) {
+      console.error('No id_token in bKash response:', data);
+      throw new Error('No id_token received from bKash');
+    }
+
+    console.log('bKash token granted successfully');
     return data.id_token;
   } catch (error) {
-    console.error('bKash token grant error:', error);
+    console.error('bKash token grant error:', error.message);
+    console.error('Full error:', error);
     throw error;
   }
 }
